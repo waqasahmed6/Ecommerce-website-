@@ -32,7 +32,7 @@ const adminController = {
       });
 
       if (!response) {
-        res.json({ message: "Invalid credentials" });
+        res.status(400).json({ message: "Invalid credentials" });
       } else {
         const ismatch = await compare(password, response.password);
         if (ismatch == true) {
@@ -43,21 +43,65 @@ const adminController = {
           const token = Jwt.sign(info, process.env.SECRET_KEY, {
             expiresIn: "1d",
           });
-          console.log(token)
+         
 
           req.session.token = token;
-          req.session.user = info;
+          req.session.user = response;
           req.session.save();
 
-          res.status(200).json({ message: "Login successfullt" });
+          res.status(200).json({ message: "Login successfully" });
         } else {
-          res.json({ message: "Invaid credentials" });
+          res.status(400).json({ message: "Invalid Credentials" });
         }
       }
     } catch (error) {
       res.json({ message: "Error occoured during login " + error }, console.log(error));
     }
   },
+  findall:async (req,res)=>{
+    // const{adminID}=req.params
+    try {
+      const response =  await adminModel.findAll()
+      res.json(response)
+    } catch (error) {
+      
+    }
+
+  },
+  update:async(req,res)=>{
+    try {
+        const{admin_id}=req.params
+    const {name, email, password } = req.body;
+    const response = await adminModel.findOne({
+        where:{id:admin_id}
+    })
+    if(!response){
+        res.status(400).json({message:"Admin not found"})
+    }else{
+      let hashpass= await hash(password,5)
+        await adminModel.update({name, email, password:hashpass },{where:{id:admin_id}})
+        res.json({message:" Updated successfully"})
+    }
+        
+    } catch (error) {
+        res.json({message:"error updating admin" ,error},
+        console.log(error))
+    }
+  },
+  findOne:async(req,res)=>{
+    const{admin_id}=req.params
+  try {
+     const response=await adminModel.findOne({
+      where:{id:admin_id}
+     })    
+     res.status(200).json({response,message:"Admin found successfully"})
+  } catch (error) {
+    res.json({message:"errror finding admin",error})
+  }
+
+  }
+
 };
+
 
 export default adminController;

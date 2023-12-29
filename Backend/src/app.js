@@ -6,10 +6,13 @@ import allRoutes from "./routes/allroutes.js";
 import sequelize from "./db/config.js";
 import Session from "express-session";
 import Sequelizestore from "connect-session-sequelize"
-const envData = process.env
-
+import cors from "cors"
 const app =express()
 app.use(express.json())
+app.use(cors())
+
+const envData = process.env
+
 
 const mySequelizeStore = Sequelizestore(Session.Store);
 const mySequelizeStore1 = new mySequelizeStore({
@@ -32,7 +35,6 @@ initDb()
     console.log(" db sync")
 }).catch((err)=>{console.log("db syn error "+ err)})
 app.use("/",allRoutes)
-
 
 app.listen(envData.PORT,(err)=>{
     if(!err){
