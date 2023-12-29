@@ -1,11 +1,14 @@
 import React from 'react'
 import Routing from './routes/routes.jsx'
-
+// import "./App.css"
 function App() {
+
   return (
-    <>
-    <Routing/>
-    </>
+    <body>
+      
+      <Routing/>
+    </body>
+    
   )
 }
 

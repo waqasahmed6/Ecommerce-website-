@@ -1,0 +1,28 @@
+.form {
+  background-color: white;
+  height: 380px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  left: 430px;
+  top: 50px;
+  border-radius: 30px;
+}
+
+.msg a{
+text-decoration: none;
+color: rgb(129, 34, 211);
+}
+.input{
+    margin: 15px;
+}
+.btn{
+    width: 150px;
+    background-color:pink ;
+    color: white;
+    border-radius:30px
+}

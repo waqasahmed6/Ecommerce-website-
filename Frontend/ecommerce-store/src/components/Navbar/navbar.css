@@ -1,0 +1,21 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    width: 100vw;
+    background-color:pink;
+}
+
+.nav{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+.nav li a{
+    font-size: 20px;
+    font-weight: 800;
+    color:white;
+    text-decoration: none;
+}
+.nav li a:hover{
+    color: black    ;
+}
