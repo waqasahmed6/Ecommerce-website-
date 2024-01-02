@@ -59,7 +59,7 @@ console.log(error)
           Login
         </button>
         <h3 className="msg">
-          Dont have account? <Link to="register">Create new account </Link>
+          Dont have account? <Link to="admins/signup">Create new account </Link>
         </h3>
       </form>
     </FormikProvider>

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import AxiosInstnace from "../../../utils/Axios/Axiox";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 
 const schema = object({
@@ -17,8 +16,8 @@ const schema = object({
 
 
 function Edit() {
+    const navigate =useNavigate()
 const{admin_id}=useParams()
-
 const fetchData=async()=>{
     try {
         const response =  await AxiosInstnace.get("/admin/"+admin_id)
@@ -27,16 +26,18 @@ const fetchData=async()=>{
        
         
     } catch (error) {
-        
+        console.log(error)
     }
 }
 const updateAdmin= async(data)=>{
 try {
     const response = await AxiosInstnace.put(`/admin/${admin_id}`,data)
     toast.success(response.data.message)
+    // navigate("/adminDashboard")
+    
 } catch (error) {
-    toast.error("error")
-    console.log(error)
+    toast.error(error.response.data.message)
+    // console.log(error)
 }
 }
 
@@ -72,7 +73,8 @@ try {
         <Field name="password" />
         <ErrorMessage name="password" />
         <br />
-        <button onClick={formik.handleSubmit}>Create</button>
+        <button onClick={formik.handleSubmit}>update</button>
+        <button onClick={()=>navigate("/adminDashboard")}>Admins</button>
       </FormikProvider>
     </>
   );
