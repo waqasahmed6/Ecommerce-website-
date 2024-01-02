@@ -78,14 +78,16 @@ const adminController = {
     if(!response){
         res.status(400).json({message:"Admin not found"})
     }else{
+      if(response.email==email){
+        return res.status(400).json({message:"email already in use"})       
+      }
       let hashpass= await hash(password,5)
         await adminModel.update({name, email, password:hashpass },{where:{id:admin_id}})
         res.json({message:" Updated successfully"})
     }
         
     } catch (error) {
-        res.json({message:"error updating admin" ,error},
-        console.log(error))
+        res.json({message:"error updating admin" ,error})
     }
   },
   findOne:async(req,res)=>{
@@ -99,6 +101,21 @@ const adminController = {
     res.json({message:"errror finding admin",error})
   }
 
+  },
+  delete:async(req,res)=>{
+    const {admin_id}=req.params
+    try {
+      const response =await adminModel.findOne({where:{id:admin_id}})
+      if(!response){
+        res.status(404).json({message:"admin not found"})
+      }
+      await adminModel.destroy({where:{id:admin_id}})
+      res.status(200).json({message:"admin deleted successfully"})
+      
+    } catch (error) {
+      // res.status(404).json({message:"Error deleting admin"})
+      console.log(error)
+    }
   }
 
 };

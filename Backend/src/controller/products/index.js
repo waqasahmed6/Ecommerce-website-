@@ -3,13 +3,15 @@ import productModel from "../../model/products/index.js";
 const productController = {
   create: async (req, res) => {
     try{
-    const { productName, productImage, productStock, productPrice } = req.body;
+    const { productName,  productStock, productPrice } = req.body;
+     const {filename}=req.file
+     console.log(filename)
+     
  await productModel.create({
-        productName, productImage, productStock, productPrice 
+        productName,  productStock, productPrice ,imagePath:filename
     });
     
-    
-      res.status(201).json({ message: "product created successfully" });  
+  res.status(201).json({ message: "product created successfully" ,link:`http://localhost:3301/productImage/${req.file.filename}`}); 
 }catch(err){
     res.json({message:"errror creating product "+err})
 }
@@ -41,6 +43,13 @@ const productController = {
         
     } catch (error) {
         res.json({message:"error updating product" ,error})
+    }
+  },getAll:async(req,res)=>{
+    try {
+     const products = await productModel.findAll({})
+      res.status(200).json({message:"products found",products})
+    } catch (error) {
+      res.status(400).json({message:"not found",error})
     }
   }
 

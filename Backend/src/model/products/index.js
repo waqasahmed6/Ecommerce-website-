@@ -5,7 +5,7 @@ productName:{
     type:DataTypes.STRING,
     allownull:false
 },
-productImage:{
+imagePath:{
     type:DataTypes.STRING,
     allownull:false
 },

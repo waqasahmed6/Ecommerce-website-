@@ -8,6 +8,7 @@ adminRouter.post('/login', adminController.login)
 adminRouter.get('/', adminController.findall)
 adminRouter.put('/:admin_id', adminController.update)
 adminRouter.get('/:admin_id', adminController.findOne)
+adminRouter.delete('/:admin_id', adminController.delete)
 
 
 export default adminRouter

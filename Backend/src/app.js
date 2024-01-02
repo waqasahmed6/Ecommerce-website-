@@ -7,11 +7,23 @@ import sequelize from "./db/config.js";
 import Session from "express-session";
 import Sequelizestore from "connect-session-sequelize"
 import cors from "cors"
+const envData = process.env
+
 const app =express()
 app.use(express.json())
-app.use(cors())
+app.use("/productImage",express.static("upload/images"))
 
-const envData = process.env
+const corsInstance = new cors({
+  origin: ["http://localhost:5173"],
+  credentials: true,
+});
+app.use(corsInstance);
+
+
+// app.use("/images",upload.single("product"),(req,res)=>{
+//   console.log(req.file)
+//   res.json(req.file)
+// })
 
 
 const mySequelizeStore = Sequelizestore(Session.Store);
@@ -22,9 +34,9 @@ app.use(
   Session({
     secret: "khgaiuksxbkaj",
     store: mySequelizeStore1,
-    saveUninitialized:false,
-    resave: true,
-    proxy: false,
+    saveUninitialized:true,
+    resave: false,
+    proxy: true,
   })
 );
 mySequelizeStore1.sync();
